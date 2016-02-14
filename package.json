@@ -1,0 +1,23 @@
+{
+  "name": "mirea-map",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-stylus": "^2.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/worldfly/mirea-map.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/worldfly/mirea-map/issues"
+  },
+  "homepage": "https://github.com/worldfly/mirea-map#readme"
+}
