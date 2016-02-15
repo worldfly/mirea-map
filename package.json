@@ -2,8 +2,10 @@
   "name": "mirea-map",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "dependencies": {},
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-stylus": "^2.3.0"
