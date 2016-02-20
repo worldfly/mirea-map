@@ -1,3 +1,6 @@
+.map {
+  overflow: scroll;
+}
 .page {
   font-family: Myriad Set Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
