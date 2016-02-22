@@ -1,2 +1,11 @@
 .map-wrap
     overflow scroll
+
+    &_invisible
+        opacity 0
+
+    &_visible
+        animation fadeInDown ease-in 0.5s
+        animation-iteration-count 1
+        transform-origin 50% 50%
+        animation-fill-mode forwards
