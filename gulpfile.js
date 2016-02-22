@@ -6,6 +6,8 @@ const babelify = require('babelify');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const jshint = require('gulp-jshint');
+const modernizr = require('modernizr');
+const uglify = require('gulp-uglify');
 
 gulp.task('css', () => {
     gulp.src(['app/app.styl'])
@@ -32,5 +34,27 @@ gulp.task('js-browserify', ['jshint'], () => {
         .pipe(gulp.dest('public'));
 });
 
+gulp.task('modernizr', () => {
+    modernizr.build({
+        minify: false,
+        options: [],
+        'feature-detects': [
+            'test/dom/classlist',
+            'test/svg/inline',
+            'test/es6/promises'
+        ]
+    }, (result) => {
+        require('fs').writeFileSync('public/app/js/external/modernizr.js', result, {encoding: 'utf-8'});
+    });
+});
+
+gulp.task('compress', ['js'], () => {
+    return gulp.src('public/app/js/**/*.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('public/app/js'));
+});
+
 gulp.task('js', ['js-browserify']);
+
 gulp.task('default', ['css', 'js']);
+gulp.task('all', ['default', 'compress']);

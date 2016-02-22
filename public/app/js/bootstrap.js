@@ -5,10 +5,10 @@ var _lib = require('./lib.js');
 
 var bMapWrap = document.getElementsByClassName('map-wrap')[0];
 
-if (!(0, _lib.svg)()) {
+if (!(Modernizr.inlinesvg && Modernizr.classlist && Modernizr.promises)) {
     (0, _lib.error)({
         context: bMapWrap,
-        msg: 'SVG not supported',
+        msg: 'Your browser is not supported',
         type: 'l'
     });
 }
@@ -26,7 +26,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.error = error;
-exports.svg = svg;
 exports.request = request;
 /**
  * Error handler
@@ -52,16 +51,6 @@ function error(_ref) {
     }
     context.innerHTML = '<h' + h + ' class="error ' + (type ? 'error_size_' + type : '') + '">' + msg + '</h' + h + '>';
     console.error(msg);
-}
-
-/**
- * Test for SVG support
- * @returns {boolean}
- */
-function svg() {
-    var div = document.createElement('div');
-    div.innerHTML = '<svg/>';
-    return (typeof SVGRect != 'undefined' && div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
 }
 
 /**

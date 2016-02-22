@@ -1,11 +1,11 @@
-import {svg, error, request} from './lib.js';
+import {error, request} from './lib.js';
 
 var bMapWrap = document.getElementsByClassName('map-wrap')[0];
 
-if (!svg()) {
+if (!(Modernizr.inlinesvg && Modernizr.classlist && Modernizr.promises)) {
     error({
         context: bMapWrap,
-        msg: 'SVG not supported',
+        msg: 'Your browser is not supported',
         type: 'l'
     });
 }

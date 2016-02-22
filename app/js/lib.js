@@ -21,20 +21,6 @@ export function error({context: context, msg: msg, type: type}) {
 }
 
 /**
- * Test for SVG support
- * @returns {boolean}
- */
-export function svg() {
-    var div = document.createElement('div');
-    div.innerHTML = '<svg/>';
-    return (
-            typeof SVGRect != 'undefined' &&
-            div.firstChild &&
-            div.firstChild.namespaceURI
-        ) == 'http://www.w3.org/2000/svg';
-}
-
-/**
  * Make XHR GET to url
  * @param url
  * @returns {Promise}
