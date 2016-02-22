@@ -4,11 +4,15 @@
 var _lib = require('./lib.js');
 
 if (!(0, _lib.svg)()) {
-    (0, _lib.error)(document.getElementsByClassName('map')[0], 'SVG');
+    (0, _lib.error)({
+        context: document.getElementsByClassName('map-wrap')[0],
+        msg: 'SVG not supported',
+        type: 'l'
+    });
 }
 
 (0, _lib.request)('/svg/map_old.svg').then(function (data) {
-    document.getElementsByClassName('map')[0].innerHTML = data;
+    document.getElementsByClassName('map-wrap')[0].innerHTML = data;
 });
 
 },{"./lib.js":2}],2:[function(require,module,exports){
@@ -24,9 +28,25 @@ exports.request = request;
  * Error handler
  * @param context
  * @param msg
+ * @param type
  */
-function error(context, msg) {
-    context.innerHTML = '<h1 class="error">' + msg + '</h1>';
+function error(_ref) {
+    var context = _ref.context;
+    var msg = _ref.msg;
+    var type = _ref.type;
+
+    var h = undefined;
+    switch (type) {
+        case 'l':
+            h = 2;
+            break;
+        case 's':
+            h = 4;
+            break;
+        default:
+            h = 3;
+    }
+    context.innerHTML = '<h' + h + ' class="error ' + (type ? 'error_size_' + type : '') + '">' + msg + '</h' + h + '>';
     console.error(msg);
 }
 

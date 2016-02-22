@@ -2,9 +2,21 @@
  * Error handler
  * @param context
  * @param msg
+ * @param type
  */
-export function error(context, msg) {
-    context.innerHTML = '<h1 class="error">' + msg + '</h1>';
+export function error({context: context, msg: msg, type: type}) {
+    let h;
+    switch (type) {
+        case 'l':
+            h = 2;
+            break;
+        case 's':
+            h = 4;
+            break;
+        default:
+            h = 3;
+    }
+    context.innerHTML = `<h${h} class="error ${type ? 'error_size_' + type : ''}">${msg}</h${h}>`;
     console.error(msg);
 }
 
@@ -17,7 +29,8 @@ export function svg() {
     div.innerHTML = '<svg/>';
     return (
             typeof SVGRect != 'undefined' &&
-            div.firstChild && div.firstChild.namespaceURI
+            div.firstChild &&
+            div.firstChild.namespaceURI
         ) == 'http://www.w3.org/2000/svg';
 }
 

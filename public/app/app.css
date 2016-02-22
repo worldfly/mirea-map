@@ -1,5 +1,18 @@
-.map {
+.error {
+  color: #f00;
+  font-size: 2em;
+}
+.error_size_l {
+  font-size: 3em;
+}
+.error_size_s {
+  font-size: 1em;
+}
+.map-wrap {
   overflow: scroll;
+}
+.map {
+  width: 1300px;
 }
 .page {
   font-family: Myriad Set Pro, Helvetica Neue, Helvetica, Arial, sans-serif;

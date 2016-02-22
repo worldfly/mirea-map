@@ -21,7 +21,7 @@ gulp.task('jshint', () => {
         .pipe(jshint.reporter('default'));
 });
 
-gulp.task('js', ['jshint'], () => {
+gulp.task('js-browserify', ['jshint'], () => {
     browserify({
         entries: 'app/js/bootstrap.js',
         extensions: ['.js']
@@ -32,4 +32,5 @@ gulp.task('js', ['jshint'], () => {
         .pipe(gulp.dest('public'));
 });
 
+gulp.task('js', ['js-browserify']);
 gulp.task('default', ['css', 'js']);
