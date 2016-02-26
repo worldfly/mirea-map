@@ -12,6 +12,6 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/app/app.html');
 });
 
-require('http').createServer(app).listen(app.get('port'), function () {
+app.listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));
 });

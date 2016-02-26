@@ -45,8 +45,7 @@ gulp.task('modernizr', () => {
         options: [],
         'feature-detects': [
             'test/dom/classlist',
-            'test/svg/inline',
-            'test/es6/promises'
+            'test/svg/inline'
         ]
     }, (result) => {
         require('fs').writeFileSync('public/app/js/external/modernizr.js', result, {encoding: 'utf-8'});
@@ -54,7 +53,7 @@ gulp.task('modernizr', () => {
 });
 
 gulp.task('compress', ['js'], () => {
-    return gulp.src('public/app/js/**/*.js')
+    gulp.src('public/app/js/**/*.js')
         .pipe(uglify())
         .pipe(gulp.dest('public/app/js'));
 });

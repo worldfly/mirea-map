@@ -3,21 +3,42 @@
 
 var _lib = require('./lib.js');
 
-var bMapWrap = document.getElementsByClassName('map-wrap')[0];
+(function (window, document) {
+    'use strict';
 
-if (!(Modernizr.inlinesvg && Modernizr.classlist && Modernizr.promises)) {
-    (0, _lib.error)({
-        context: bMapWrap,
-        msg: 'Your browser is not supported',
-        type: 'l'
+    var bMapWrap = document.getElementsByClassName('map-wrap')[0];
+
+    if (!(Modernizr.inlinesvg && Modernizr.classlist)) {
+        (0, _lib.error)({
+            context: bMapWrap,
+            msg: 'Your browser is not supported',
+            type: 'l'
+        });
+    }
+    delete window.Modernizr;
+
+    //request('/svg/map_old.svg').then(function (data) {
+    //    bMapWrap.innerHTML = data;
+    //    bMapWrap.classList.remove('map-wrap_invisible');
+    //    bMapWrap.classList.add('map-wrap_visible');
+    //});
+
+    (0, _lib.requestC)('/svg/map_old.svg', function (data, err) {
+        if (err) {
+            (0, _lib.error)({
+                context: bMapWrap,
+                type: 'l',
+                msg: err
+            });
+
+            throw new Error(err);
+        }
+
+        bMapWrap.innerHTML = data;
+        bMapWrap.classList.remove('map-wrap_invisible');
+        bMapWrap.classList.add('map-wrap_visible');
     });
-}
-
-(0, _lib.request)('/svg/map_old.svg').then(function (data) {
-    bMapWrap.innerHTML = data;
-    bMapWrap.classList.remove('map-wrap_invisible');
-    bMapWrap.classList.add('map-wrap_visible');
-});
+})(window, document);
 
 },{"./lib.js":2}],2:[function(require,module,exports){
 'use strict';
@@ -27,6 +48,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.error = error;
 exports.request = request;
+exports.requestC = requestC;
 /**
  * Error handler
  * @param context
@@ -34,10 +56,11 @@ exports.request = request;
  * @param type
  */
 function error(_ref) {
+    'use strict';
+
     var context = _ref.context;
     var msg = _ref.msg;
     var type = _ref.type;
-
     var h = undefined;
     switch (type) {
         case 'l':
@@ -59,6 +82,8 @@ function error(_ref) {
  * @returns {Promise}
  */
 function request(url) {
+    'use strict';
+
     return new Promise(function (resolve, reject) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
@@ -74,6 +99,29 @@ function request(url) {
         };
         request.send(null);
     });
+}
+
+/**
+ * Make compatible (without es6 promises) XHR GET to url
+ * @param url
+ * @param callback
+ */
+function requestC(url, callback) {
+    'use strict';
+
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.onload = function () {
+        if (request.status === 200) {
+            callback(request.response, false);
+        } else {
+            callback(undefined, request.statusText);
+        }
+    };
+    request.onerror = function () {
+        callback(undefined, 'Network Error');
+    };
+    request.send(null);
 }
 
 },{}]},{},[1]);

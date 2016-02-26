@@ -5,6 +5,8 @@
  * @param type
  */
 export function error({context: context, msg: msg, type: type}) {
+    'use strict';
+
     let h;
     switch (type) {
         case 'l':
@@ -26,6 +28,8 @@ export function error({context: context, msg: msg, type: type}) {
  * @returns {Promise}
  */
 export function request(url) {
+    'use strict';
+
     return new Promise(function (resolve, reject) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
@@ -41,4 +45,28 @@ export function request(url) {
         };
         request.send(null);
     });
+}
+
+/**
+ * Make compatible (without es6 promises) XHR GET to url
+ * @param url
+ * @param callback
+ */
+export function requestC(url, callback) {
+    'use strict';
+
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.onload = function () {
+        if (request.status === 200) {
+            callback(request.response, false);
+
+        } else {
+            callback(undefined, request.statusText);
+        }
+    };
+    request.onerror = function () {
+        callback(undefined, 'Network Error');
+    };
+    request.send(null);
 }
