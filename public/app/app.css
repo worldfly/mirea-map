@@ -1,40 +1,24 @@
-@-moz-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate(0px, -80px);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0px, 0px);
-  }
-}
 @-webkit-keyframes fadeInDown {
   0% {
     opacity: 0;
+    -webkit-transform: translate(0px, -80px);
     transform: translate(0px, -80px);
   }
   100% {
     opacity: 1;
-    transform: translate(0px, 0px);
-  }
-}
-@-o-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate(0px, -80px);
-  }
-  100% {
-    opacity: 1;
+    -webkit-transform: translate(0px, 0px);
     transform: translate(0px, 0px);
   }
 }
 @keyframes fadeInDown {
   0% {
     opacity: 0;
+    -webkit-transform: translate(0px, -80px);
     transform: translate(0px, -80px);
   }
   100% {
     opacity: 1;
+    -webkit-transform: translate(0px, 0px);
     transform: translate(0px, 0px);
   }
 }
@@ -49,19 +33,33 @@
   font-size: 1em;
 }
 .map-wrap {
-  overflow: scroll;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 .map-wrap_invisible {
   opacity: 0;
 }
 .map-wrap_visible {
+  -webkit-animation: fadeInDown ease-in 0.5s;
   animation: fadeInDown ease-in 0.5s;
+  -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
+  -webkit-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
+  -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
 .map {
   width: 1300px;
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 .page {
   font-family: Myriad Set Pro, Helvetica Neue, Helvetica, Arial, sans-serif;

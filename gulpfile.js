@@ -8,10 +8,15 @@ const source = require('vinyl-source-stream');
 const jshint = require('gulp-jshint');
 const modernizr = require('modernizr');
 const uglify = require('gulp-uglify');
+const autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('css', () => {
     gulp.src(['app/app.styl'])
         .pipe(stylus())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
         .pipe(gulp.dest('public/app'));
 });
 
