@@ -21,7 +21,7 @@ gulp.task('css', () => {
 });
 
 gulp.task('jshint', () => {
-    gulp.src('app/js/*.js')
+    gulp.src(['app/js/*.js'/*, 'server.js'*/])
         .pipe(jshint({
             esversion: 6
         }))

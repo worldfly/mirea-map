@@ -3,8 +3,12 @@
 
 var _lib = require('./lib.js');
 
-(function (window, document) {
+var bootCount = 0;
+
+(function bootstrap(window, document) {
     'use strict';
+
+    bootCount++;
 
     var bMapWrap = document.getElementsByClassName('map-wrap')[0];
 
@@ -17,12 +21,6 @@ var _lib = require('./lib.js');
     }
     delete window.Modernizr;
 
-    //request('/svg/map_old.svg').then(function (data) {
-    //    bMapWrap.innerHTML = data;
-    //    bMapWrap.classList.remove('map-wrap_invisible');
-    //    bMapWrap.classList.add('map-wrap_visible');
-    //});
-
     (0, _lib.requestC)('/svg/map_old.svg', function (data, err) {
         if (err) {
             (0, _lib.error)({
@@ -31,7 +29,11 @@ var _lib = require('./lib.js');
                 msg: err
             });
 
-            throw new Error(err);
+            if (bootCount > 2) {
+                throw new Error(err);
+            } else {
+                bootstrap(window, document);
+            }
         }
 
         bMapWrap.innerHTML = data;
@@ -40,16 +42,52 @@ var _lib = require('./lib.js');
 
         var bMap = document.getElementsByClassName('map')[0];
 
-        document.getElementsByClassName('control__plus')[0].addEventListener('click', function (event) {
-            var width = parseFloat(bMap.style.width);
-            width += 20;
-            bMap.style.width = width + '%';
-        });
+        var zoom = {
+            'in': function _in(event) {
+                event.preventDefault();
+                var width = parseFloat(bMap.style.width);
+                width += 20;
+                bMap.style.width = width + '%';
+            },
+            out: function out(event) {
+                var width = parseFloat(bMap.style.width);
+                if (width > 20) {
+                    width -= 20;
+                    bMap.style.width = width + '%';
+                }
+            }
+        };
 
-        document.getElementsByClassName('control__minus')[0].addEventListener('click', function (event) {
-            var width = parseFloat(bMap.style.width);
-            width -= 20;
-            bMap.style.width = width + '%';
+        document.getElementsByClassName('control__zoom-in')[0].addEventListener('click', zoom.in);
+        bMapWrap.addEventListener('dblclick', zoom.in);
+
+        document.getElementsByClassName('control__zoom-out')[0].addEventListener('click', zoom.out);
+
+        var slider = {
+            startingMousePostition: {},
+            containerOffset: {},
+            slide: function slide(event) {
+                event.preventDefault();
+                var x = slider.containerOffset.x + (slider.startingMousePostition.x - event.clientX);
+                var y = slider.containerOffset.y + (slider.startingMousePostition.y - event.clientY);
+                bMapWrap.scrollLeft = x;
+                bMapWrap.scrollTop = y;
+            }
+        };
+
+        window.addEventListener('mousedown', function (event) {
+            slider.startingMousePostition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+            slider.containerOffset = {
+                x: bMapWrap.scrollLeft,
+                y: bMapWrap.scrollTop
+            };
+            window.addEventListener('mousemove', slider.slide);
+        });
+        window.addEventListener('mouseup', function (event) {
+            window.removeEventListener('mousemove', slider.slide);
         });
     });
 })(window, document);

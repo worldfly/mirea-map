@@ -5,8 +5,14 @@ const app = express();
 
 app.set('port', process.env.PORT || 3000);
 
-app.use('/public', express.static('public'));
-app.use('/svg', express.static('svg'));
+
+const staticConfig = {
+    maxAge: 180000,
+    index: false,
+    etag: true
+};
+app.use('/public', express.static('public', staticConfig));
+app.use('/svg', express.static('svg', staticConfig));
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/app/app.html');
