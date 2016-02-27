@@ -11,7 +11,6 @@ const staticConfig = {
     etag: true
 };
 app.use('/public', express.static('public', staticConfig));
-app.use('/svg', express.static('svg', staticConfig));
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/app/app.html'));
 
