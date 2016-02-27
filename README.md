@@ -3,6 +3,9 @@
 
 Стабильная версия: https://map.worldfly.info
 
+## Build Status
+[![](https://travis-ci.org/worldfly/mirea-map.svg)](https://travis-ci.org/worldfly/mirea-map/builds)
+
 ## Сборка и запуск
 Установка зависимостей
 ```
