@@ -21,7 +21,7 @@ var bootCount = 0;
     }
     delete window.Modernizr;
 
-    (0, _lib.requestC)('/svg/map_old.svg', function (data, err) {
+    (0, _lib.requestC)('/public/app/svg/map_old.svg', function (data, err) {
         if (err) {
             (0, _lib.error)({
                 context: bMapWrap,
