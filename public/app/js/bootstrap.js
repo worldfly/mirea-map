@@ -46,13 +46,13 @@ var bootCount = 0;
             'in': function _in(event) {
                 event.preventDefault();
                 var width = parseFloat(bMap.style.width);
-                width += 20;
+                width *= 1.3;
                 bMap.style.width = width + '%';
             },
             out: function out(event) {
                 var width = parseFloat(bMap.style.width);
                 if (width > 20) {
-                    width -= 20;
+                    width *= 0.7;
                     bMap.style.width = width + '%';
                 }
             }
