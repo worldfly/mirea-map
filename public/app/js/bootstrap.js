@@ -37,6 +37,20 @@ var _lib = require('./lib.js');
         bMapWrap.innerHTML = data;
         bMapWrap.classList.remove('map-wrap_invisible');
         bMapWrap.classList.add('map-wrap_visible');
+
+        var bMap = document.getElementsByClassName('map')[0];
+
+        document.getElementsByClassName('control__plus')[0].addEventListener('click', function (event) {
+            var width = parseFloat(bMap.style.width);
+            width += 20;
+            bMap.style.width = width + '%';
+        });
+
+        document.getElementsByClassName('control__minus')[0].addEventListener('click', function (event) {
+            var width = parseFloat(bMap.style.width);
+            width -= 20;
+            bMap.style.width = width + '%';
+        });
     });
 })(window, document);
 

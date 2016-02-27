@@ -22,6 +22,16 @@
     transform: translate(0px, 0px);
   }
 }
+.control {
+  position: absolute;
+  left: 0;
+  top: 20%;
+  font-size: 2em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .error {
   color: #f00;
   font-size: 2em;
@@ -42,6 +52,10 @@
   -webkit-overflow-scrolling: touch;
   cursor: -webkit-grab;
   cursor: grab;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .map-wrap_invisible {
   opacity: 0;
@@ -58,8 +72,6 @@
 }
 .map {
   width: 1300px;
-  cursor: -webkit-grab;
-  cursor: grab;
 }
 .page {
   font-family: Myriad Set Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
