@@ -10,10 +10,11 @@ const staticConfig = {
     index: false,
     etag: true
 };
-app.use('/public', express.static('public', staticConfig));
+
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/app/app.html'));
 
-app.get('/favicon.ico', (req, res) => res.sendfile(__dirname + '/public/app/images/favicon.ico'));
+app.get('/favicon.ico', (req, res) => res.sendFile(__dirname + '/public/images/favicon.ico'));
 
 app.listen(app.get('port'), () => console.log('Server listening on port ' + app.get('port')));

@@ -17,7 +17,7 @@ var bootCount = 0;
     }
     delete window.Modernizr;
 
-    requestC('/public/app/svg/map_old.svg', (data, err) => {
+    requestC('/svg/map_old.svg', (data, err) => {
         if (err) {
             error({
                 context: bMapWrap,
