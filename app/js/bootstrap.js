@@ -8,8 +8,8 @@ var bootCount = 0;
 
     var bMapWrap = document.getElementsByClassName('map-wrap')[0];
 
-    if (!(Modernizr.inlinesvg && Modernizr.classlist)) {
-        error({
+    if (!(Modernizr.inlinesvg && Modernizr.classlist && Modernizr.csstransforms)) {
+        throw error({
             context: bMapWrap,
             msg: 'Your browser is not supported',
             type: 'l'
