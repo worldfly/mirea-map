@@ -49,14 +49,14 @@ gulp.task('modernizr', () => {
             'test/css/transforms'
         ]
     }, (result) => {
-        require('fs').writeFileSync('public/app/js/external/modernizr.js', result, {encoding: 'utf-8'});
+        require('fs').writeFileSync('public/js/external/modernizr.js', result, {encoding: 'utf-8'});
     });
 });
 
 gulp.task('compress', ['js'], () => {
-    gulp.src('public/app/js/**/*.js')
+    gulp.src('public/js/**/*.js')
         .pipe(uglify())
-        .pipe(gulp.dest('public/app/js'));
+        .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('js', ['js-browserify']);
