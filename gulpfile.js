@@ -45,7 +45,8 @@ gulp.task('modernizr', () => {
         options: [],
         'feature-detects': [
             'test/dom/classlist',
-            'test/svg/inline'
+            'test/svg/inline',
+            'test/css/transforms'
         ]
     }, (result) => {
         require('fs').writeFileSync('public/app/js/external/modernizr.js', result, {encoding: 'utf-8'});
