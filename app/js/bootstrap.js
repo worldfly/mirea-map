@@ -45,7 +45,7 @@ var bootCount = 0;
             y: 0,
             xStart: 0,
             yStart: 0,
-            getMatrix: () => `matrix(${transform.scale},0.00,0.00,${transform.scale},${transform.x},${transform.y})`,
+            getMatrix: () => `matrix(${transform.scale},0,0,${transform.scale},${transform.x},${transform.y})`,
             'in': (event) => {
                 event.preventDefault();
                 transform.scale *= 1.3;
@@ -57,16 +57,14 @@ var bootCount = 0;
                     bMap.style.transform = transform.getMatrix();
                 }
             },
-            slide: debounce((event) => {
-                var timeout = 250;
-                event.preventDefault();
-                //var x = slider.containerOffset.x + (slider.startingMousePostition.x - event.clientX);
-                //var y = slider.containerOffset.y + (slider.startingMousePostition.y - event.clientY);
-                transform.x = transform.x + (transform.xStart - event.clientX);
-                transform.y = transform.y + (transform.yStart - event.clientY);
-                bMap.style.transform = transform.getMatrix();
-                console.log(transform.getMatrix());
-            }, 250)
+            slide: () => {
+                debounce((event) => {
+                    event.preventDefault();
+                    transform.x = transform.x + (transform.xStart - event.clientX);
+                    transform.y = transform.y + (transform.yStart - event.clientY);
+                    bMap.style.transform = transform.getMatrix();
+                }, 250);
+            }
         };
 
         document.getElementsByClassName('control__zoom-in')[0].addEventListener('click', transform.in);
