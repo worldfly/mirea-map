@@ -28,7 +28,7 @@
   border: 0;
   border-radius: 32px;
   box-shadow: 0 3px 4px 1px rgba(0,0,0,0.15);
-  transition: box-shadow ease 0.2s;
+  transition: box-shadow ease 0.18s;
 }
 .button:hover {
   box-shadow: 0 3px 4px 1px rgba(0,0,0,0.5);
@@ -86,15 +86,16 @@
   right: 0;
   bottom: 0;
   left: 0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  cursor: -webkit-grab;
-  cursor: grab;
+  overflow: hidden;
+  cursor: default;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   text-align: center;
+}
+.map-wrap:active {
+  cursor: move;
 }
 .map-wrap_invisible {
   opacity: 0;
@@ -111,7 +112,6 @@
 }
 .map {
   width: 1300px;
-  transition: width ease 0.3s;
 }
 .page {
   font-family: Myriad Set Pro, Helvetica Neue, Helvetica, Arial, sans-serif;

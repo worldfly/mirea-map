@@ -1,4 +1,4 @@
-import {error, requestC} from './lib.js';
+import {error, requestC, debounce} from './lib.js';
 
 var bootCount = 0;
 
@@ -8,7 +8,7 @@ var bootCount = 0;
 
     var bMapWrap = document.getElementsByClassName('map-wrap')[0];
 
-    if (!(Modernizr.inlinesvg && Modernizr.classlist)) {
+    if (!(Modernizr.inlinesvg && Modernizr.classlist && Modernizr.csstransforms)) {
         error({
             context: bMapWrap,
             msg: 'Your browser is not supported',
@@ -39,52 +39,48 @@ var bootCount = 0;
 
         var bMap = document.getElementsByClassName('map')[0];
 
-        var zoom = {
+        var transform = {
+            scale: 1,
+            x: 0,
+            y: 0,
+            xStart: 0,
+            yStart: 0,
+            getMatrix: () => `matrix(${transform.scale},0.00,0.00,${transform.scale},${transform.x},${transform.y})`,
             'in': (event) => {
                 event.preventDefault();
-                var width = parseFloat(bMap.style.width);
-                width *= 1.3;
-                bMap.style.width = width + '%';
+                transform.scale *= 1.3;
+                bMap.style.transform = transform.getMatrix();
             },
             out: (event) => {
-                var width = parseFloat(bMap.style.width);
-                if (width > 20) {
-                    width *= 0.7;
-                    bMap.style.width = width + '%';
+                if (transform.scale > 0) {
+                    transform.scale *= 0.7;
+                    bMap.style.transform = transform.getMatrix();
                 }
-            }
-        };
-
-        document.getElementsByClassName('control__zoom-in')[0].addEventListener('click', zoom.in);
-        bMapWrap.addEventListener('dblclick', zoom.in);
-
-        document.getElementsByClassName('control__zoom-out')[0].addEventListener('click', zoom.out);
-
-        var slider = {
-            startingMousePostition: {},
-            containerOffset: {},
-            slide: (event) => {
+            },
+            slide: debounce((event) => {
+                var timeout = 250;
                 event.preventDefault();
-                var x = slider.containerOffset.x + (slider.startingMousePostition.x - event.clientX);
-                var y = slider.containerOffset.y + (slider.startingMousePostition.y - event.clientY);
-                bMapWrap.scrollLeft = x;
-                bMapWrap.scrollTop = y;
-            }
+                //var x = slider.containerOffset.x + (slider.startingMousePostition.x - event.clientX);
+                //var y = slider.containerOffset.y + (slider.startingMousePostition.y - event.clientY);
+                transform.x = transform.x + (transform.xStart - event.clientX);
+                transform.y = transform.y + (transform.yStart - event.clientY);
+                bMap.style.transform = transform.getMatrix();
+                console.log(transform.getMatrix());
+            }, 250)
         };
+
+        document.getElementsByClassName('control__zoom-in')[0].addEventListener('click', transform.in);
+        bMapWrap.addEventListener('dblclick', transform.in);
+
+        document.getElementsByClassName('control__zoom-out')[0].addEventListener('click', transform.out);
 
         window.addEventListener('mousedown', (event) => {
-            slider.startingMousePostition = {
-                x: event.clientX,
-                y: event.clientY
-            };
-            slider.containerOffset = {
-                x: bMapWrap.scrollLeft,
-                y: bMapWrap.scrollTop
-            };
-            window.addEventListener('mousemove', slider.slide);
+            transform.xStart = event.clientX;
+            transform.yStart = event.clientY;
+            window.addEventListener('mousemove', transform.slide);
         });
         window.addEventListener('mouseup', (event) => {
-            window.removeEventListener('mousemove', slider.slide);
+            window.removeEventListener('mousemove', transform.slide);
         });
 
     });
