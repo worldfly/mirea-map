@@ -48,7 +48,7 @@ gulp.task('modernizr', () => {
             'test/svg/inline',
             'test/css/transforms'
         ]
-    }, (result) => require('fs').writeFileSync('public/app/js/external/modernizr.js', result, {encoding: 'utf-8'}));
+    }, (result) => require('fs').writeFileSync('public/js/external/modernizr.js', result, {encoding: 'utf-8'}));
 });
 
 gulp.task('compress', ['js', 'css'], () => {

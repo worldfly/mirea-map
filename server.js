@@ -11,7 +11,7 @@ const staticConfig = {
     etag: true
 };
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public', staticConfig));
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/app/app.html'));
 

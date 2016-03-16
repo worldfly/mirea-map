@@ -1,0 +1,16 @@
+{
+    "env": {
+        "node": true,
+        "es6": true,
+        "browser": true
+    },
+    "extends": "yandex",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "rules": {
+        "vars-on-top": 1,
+        "spaced-comment": 1
+    }
+}
