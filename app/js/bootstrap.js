@@ -4,9 +4,10 @@ var bootCount = 0;
 
 (function bootstrap(window, document) {
     'use strict';
-    bootCount++;
 
     var bMapWrap = document.getElementsByClassName('map-wrap')[0];
+
+    bootCount++;
 
     if (!(Modernizr.inlinesvg && Modernizr.classlist && Modernizr.csstransforms)) {
         error({

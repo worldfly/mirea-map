@@ -5,11 +5,11 @@ const stylus = require('gulp-stylus');
 const babelify = require('babelify');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
-const jshint = require('gulp-jshint');
 const modernizr = require('modernizr');
 const uglify = require('gulp-uglify');
 const autoprefixer = require('gulp-autoprefixer');
 const cssnano = require('gulp-cssnano');
+const shell = require('gulp-shell');
 
 gulp.task('css', () => {
     gulp.src(['app/app.styl'])
@@ -22,11 +22,10 @@ gulp.task('css', () => {
 });
 
 gulp.task('js-lint', () => {
-    gulp.src(['app/js/*.js'/*, 'server.js'*/])
-        .pipe(jshint({
-            esversion: 6
-        }))
-        .pipe(jshint.reporter('default'));
+    gulp.src(['server.js', 'gulpfile.js', 'app/js/**.js'])
+        .pipe(shell('./node_modules/.bin/eslint <%= file.path %>', {
+            verbose: true
+        }));
 });
 
 gulp.task('js-browserify', ['js-lint'], () => {

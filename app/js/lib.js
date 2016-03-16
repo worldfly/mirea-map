@@ -31,19 +31,19 @@ export function request(url) {
     'use strict';
 
     return new Promise(function (resolve, reject) {
-        var request = new XMLHttpRequest();
-        request.open('GET', url, true);
-        request.onload = function () {
-            if (request.status === 200) {
-                resolve(request.response);
+        var req = new XMLHttpRequest();
+        req.open('GET', url, true);
+        req.onload = function () {
+            if (req.status === 200) {
+                resolve(req.response);
             } else {
-                reject(Error(request.statusText));
+                reject(Error(req.statusText));
             }
         };
-        request.onerror = function () {
+        req.onerror = function () {
             reject(Error('Network Error'));
         };
-        request.send(null);
+        req.send(null);
     });
 }
 
@@ -55,20 +55,20 @@ export function request(url) {
 export function requestC(url, callback) {
     'use strict';
 
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.onload = function () {
-        if (request.status === 200) {
-            callback(request.response, false);
+    var req = new XMLHttpRequest();
+    req.open('GET', url, true);
+    req.onload = function () {
+        if (req.status === 200) {
+            callback(req.response, false);
 
         } else {
-            callback(undefined, request.statusText);
+            callback(undefined, req.statusText);
         }
     };
-    request.onerror = function () {
+    req.onerror = function () {
         callback(undefined, 'Network Error');
     };
-    request.send(null);
+    req.send(null);
 }
 
 export function debounce(func, wait, immediate) {
