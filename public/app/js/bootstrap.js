@@ -21,7 +21,7 @@ var bootCount = 0;
     }
     delete window.Modernizr;
 
-    (0, _lib.requestC)('/public/app/svg/map_old.svg', function (data, err) {
+    (0, _lib.requestC)('/svg/map_old.svg', function (data, err) {
         if (err) {
             (0, _lib.error)({
                 context: bMapWrap,
@@ -57,21 +57,30 @@ var bootCount = 0;
                 bMap.style.transform = transform.getMatrix();
             },
             out: function out(event) {
-                if (transform.scale > 0) {
+                if (transform.scale > 0.18) {
                     transform.scale *= 0.7;
                     bMap.style.transform = transform.getMatrix();
                 }
             },
-            slide: function slide() {
-                (0, _lib.debounce)(function (event) {
-                    event.preventDefault();
-                    transform.x = transform.x + (transform.xStart - event.clientX);
-                    transform.y = transform.y + (transform.yStart - event.clientY);
-                    bMap.style.transform = transform.getMatrix();
-                }, 250);
+            slide: function slide(event) {
+                event.preventDefault();
+                var x = Math.round(transform.x - (transform.xStart - event.clientX));
+                var y = Math.round(transform.y - (transform.yStart - event.clientY));
+
+                bMap.style.left = x;
+                bMap.style.top = y;
             }
         };
 
+        //        slideTouch: (event) => {
+        //            event.preventDefault();
+        //            var touch = event.changedTouches[0];
+        //            var x = Math.round(transform.x - (transform.xStart - touch.clientX));
+        //            var y = Math.round(transform.y - (transform.yStart - touch.clientY));
+        //console.log(x);
+        //            bMap.style.left = x;
+        //            bMap.style.top = y;
+        //        }
         document.getElementsByClassName('control__zoom-in')[0].addEventListener('click', transform.in);
         bMapWrap.addEventListener('dblclick', transform.in);
 
@@ -85,6 +94,16 @@ var bootCount = 0;
         window.addEventListener('mouseup', function (event) {
             window.removeEventListener('mousemove', transform.slide);
         });
+        //
+        //window.addEventListener('touchstart', (event) => {
+        //    var touch = event.changedTouches[0];
+        //    transform.xStart = touch.clientX;
+        //    transform.yStart = touch.clientY;
+        //});
+        //window.addEventListener('touchmove', (event) => transform.slideTouch);
+        ////window.addEventListener('touchend', (event) => {
+        ////    window.removeEventListener('touchmove', transform.slideTouch);
+        ////});
     });
 })(window, document);
 
