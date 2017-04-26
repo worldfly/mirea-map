@@ -85,9 +85,12 @@ var bootCount = 0;
         window.addEventListener('mousedown', (event) => {
             transform.xStart = event.clientX;
             transform.yStart = event.clientY;
+
             window.addEventListener('mousemove', transform.slide);
         });
         window.addEventListener('mouseup', (event) => {
+            transform.x = parseInt(bMap.style.left, 10);
+            transform.y = parseInt(bMap.style.top, 10);
             window.removeEventListener('mousemove', transform.slide);
         });
         //
