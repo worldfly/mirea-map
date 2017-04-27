@@ -112,9 +112,6 @@
 }
 .map {
   width: 1300px;
-  transition: -webkit-transform ease 0.3s;
-  transition: transform ease 0.3s;
-  transition: transform ease 0.3s, -webkit-transform ease 0.3s;
   position: absolute;
   left: 0;
   top: 0;

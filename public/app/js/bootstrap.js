@@ -51,24 +51,30 @@ var bootCount = 0;
             getMatrix: function getMatrix() {
                 return 'matrix(' + transform.scale + ',0,0,' + transform.scale + ',' + transform.x + ',' + transform.y + ')';
             },
-            'in': function _in(event) {
+            in: function _in(event) {
                 event.preventDefault();
                 transform.scale *= 1.3;
+                transform.x = event.offsetX - (event.offsetX - transform.x) * 1.3;
+                transform.y = event.offsetY - (event.offsetY - transform.y) * 1.3;
                 bMap.style.transform = transform.getMatrix();
             },
             out: function out(event) {
                 if (transform.scale > 0.18) {
                     transform.scale *= 0.7;
+                    transform.x = event.offsetX - (event.offsetX - transform.x) * 0.7;
+                    transform.y = event.offsetY - (event.offsetY - transform.y) * 0.7;
                     bMap.style.transform = transform.getMatrix();
                 }
             },
             slide: function slide(event) {
                 event.preventDefault();
-                var x = Math.round(transform.x - (transform.xStart - event.clientX));
-                var y = Math.round(transform.y - (transform.yStart - event.clientY));
+                transform.x += event.clientX - transform.xStart;
+                transform.y += event.clientY - transform.yStart;
 
-                bMap.style.left = x;
-                bMap.style.top = y;
+                transform.xStart = event.clientX;
+                transform.yStart = event.clientY;
+
+                bMap.style.transform = transform.getMatrix();
             }
         };
 
@@ -93,8 +99,6 @@ var bootCount = 0;
             window.addEventListener('mousemove', transform.slide);
         });
         window.addEventListener('mouseup', function (event) {
-            transform.x = parseInt(bMap.style.left, 10);
-            transform.y = parseInt(bMap.style.top, 10);
             window.removeEventListener('mousemove', transform.slide);
         });
         //
