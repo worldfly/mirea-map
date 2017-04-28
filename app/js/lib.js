@@ -5,8 +5,6 @@
  * @param type
  */
 export function error({context: context, msg: msg, type: type}) {
-    'use strict';
-
     let h;
     switch (type) {
         case 'l':
